@@ -10,7 +10,7 @@
 const CONFIG = {
   // >>> PUT YOUR BACKEND ENDPOINT HERE, e.g. "https://api.yourdomain.com/chat"
   // While this is empty, the chatbot runs in DEMO MODE (local fake answers).
-  API_URL: "http://localhost:3000/api/chat",
+  API_URL: "/api/chat",
 
   // SECURITY: Never expose production API keys in frontend JavaScript.
   // Anyone can open DevTools and read this file. Keep real keys on your
