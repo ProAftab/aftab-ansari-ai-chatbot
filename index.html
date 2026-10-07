@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- interactive-widget: on Android the layout shrinks when the keyboard opens, so the input stays visible -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content" />
+  <meta name="description" content="Aftab Ansari AI – a personal AI assistant for Linux, AWS, DevOps and networking." />
+  <title>Aftab Ansari AI – Your Personal AI Assistant</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Icon sprite (inline SVG, no icon library needed). Used with <use href="#i-name"> -->
+  <svg class="icon-sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/></symbol>
+    <symbol id="i-clip" viewBox="0 0 24 24"><path d="M21 11.5l-8.6 8.6a5 5 0 0 1-7-7l8.8-8.8a3.3 3.3 0 0 1 4.7 4.7l-8.8 8.8a1.7 1.7 0 0 1-2.4-2.4l8-8"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  </svg>
+
+  <!-- Animated background: grid + soft glowing orbs (pure CSS) -->
+  <div class="bg" aria-hidden="true">
+    <span class="orb orb-1"></span>
+    <span class="orb orb-2"></span>
+    <span class="orb orb-3"></span>
+  </div>
+
+  <div class="app">
+
+    <!-- ========== HEADER (stays visible while chatting) ========== -->
+    <header class="header">
+      <div class="brand">
+        <div class="ai-orb" aria-hidden="true"><span class="ai-core"></span></div>
+        <div class="brand-text">
+          <h1>Aftab Ansari AI</h1>
+          <p class="tagline">Powered by Intelligence • Built for Aftab Ansari</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <span class="status" role="status">
+          <span class="dot" aria-hidden="true"></span><span class="status-text">AI Online</span>
+        </span>
+
+        <button type="button" class="btn btn-ghost" id="new-chat-btn" aria-label="Start a new chat">
+          <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+          <span class="btn-label">New Chat</span>
+        </button>
+
+        <div class="menu-wrap">
+          <button type="button" class="btn btn-icon" id="menu-btn" aria-label="Settings and menu"
+                  aria-haspopup="true" aria-expanded="false" aria-controls="menu">
+            <svg class="icon" aria-hidden="true"><use href="#i-sliders"/></svg>
+          </button>
+          <div class="menu" id="menu" hidden>
+            <p class="menu-title">Settings</p>
+            <p class="menu-info">Mode: <strong id="mode-label">Demo</strong></p>
+            <button type="button" class="menu-item" id="clear-btn">
+              <svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg> Clear chat
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ========== CHAT AREA ========== -->
+    <main class="chat-scroll" id="chat-scroll">
+
+      <!-- Welcome screen (shown when there are no messages) -->
+      <section class="welcome" id="welcome" aria-labelledby="welcome-title">
+        <div class="ai-orb ai-orb-lg" aria-hidden="true"><span class="ai-core"></span></div>
+        <h2 id="welcome-title">Hello, I'm <span class="grad">Aftab Ansari AI</span> 👋</h2>
+        <p class="welcome-sub">How can I help you today?</p>
+        <p class="welcome-desc">Ask me about Linux, AWS, DevOps, networking, technology, career guidance, or Aftab Ansari.</p>
+
+        <div class="cards">
+          <button type="button" class="card" data-prompt="What is Linux and why is it important for DevOps?">
+            <span class="card-emoji" aria-hidden="true">💻</span>
+            <span class="card-title">Linux &amp; DevOps</span>
+            <span class="card-text">Servers, shell, automation</span>
+          </button>
+          <button type="button" class="card" data-prompt="How do I get started with AWS and cloud computing?">
+            <span class="card-emoji" aria-hidden="true">☁️</span>
+            <span class="card-title">AWS &amp; Cloud</span>
+            <span class="card-text">EC2, S3, IAM, VPC</span>
+          </button>
+          <button type="button" class="card" data-prompt="Explain networking basics: IP, DNS and subnets">
+            <span class="card-emoji" aria-hidden="true">🌐</span>
+            <span class="card-title">Networking</span>
+            <span class="card-text">IP, DNS, subnets</span>
+          </button>
+          <button type="button" class="card" data-prompt="How can I start a career in Linux, AWS and DevOps?">
+            <span class="card-emoji" aria-hidden="true">🚀</span>
+            <span class="card-title">Career &amp; Technology</span>
+            <span class="card-text">Skills, roadmap, tips</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Conversation (messages are added here by script.js) -->
+      <div class="messages" id="messages" role="log" aria-live="polite" aria-label="Conversation" hidden></div>
+    </main>
+
+    <!-- ========== INPUT + FOOTER ========== -->
+    <div class="bottom">
+      <form class="composer" id="composer" autocomplete="off">
+        <button type="button" class="btn btn-icon" id="attach-btn" aria-label="Attach a file">
+          <svg class="icon" aria-hidden="true"><use href="#i-clip"/></svg>
+        </button>
+
+        <label for="input" class="sr-only">Message Aftab Ansari AI</label>
+        <textarea id="input" rows="1" maxlength="2000" placeholder="Ask Aftab Ansari AI anything…"></textarea>
+
+        <button type="button" class="btn btn-icon" id="mic-btn" aria-label="Voice input" aria-pressed="false">
+          <svg class="icon" aria-hidden="true"><use href="#i-mic"/></svg>
+        </button>
+        <button type="submit" class="btn btn-send" id="send-btn" aria-label="Send message" disabled>
+          <svg class="icon" aria-hidden="true"><use href="#i-send"/></svg>
+        </button>
+      </form>
+
+      <div class="composer-meta">
+        <span class="hint">Enter to send · Shift + Enter for a new line</span>
+        <span class="counter" id="counter">0 / 2000</span>
+      </div>
+
+      <footer class="footer-note">
+        Aftab Ansari AI • Personal AI Assistant &nbsp;·&nbsp; Built with HTML • CSS • JavaScript
+      </footer>
+    </div>
+  </div>
+
+  <!-- Small notification (copy, attachments, voice...) -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Confirmation dialog for "Clear chat" -->
+  <dialog class="dialog" id="confirm-dialog" aria-labelledby="dlg-title">
+    <form method="dialog">
+      <h3 id="dlg-title">Clear this conversation?</h3>
+      <p>All messages in this chat will be removed. This can't be undone.</p>
+      <div class="dialog-actions">
+        <button type="submit" value="cancel" class="btn btn-ghost" autofocus>Cancel</button>
+        <button type="submit" value="confirm" class="btn btn-primary">Clear chat</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
